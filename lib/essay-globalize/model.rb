@@ -1,6 +1,6 @@
 class Essay::ModelFeatures
   def translates_with_globalize?
-    defined?(Globalize) && model_class.included_modules.include?(::Globalize::ActiveRecord::InstanceMethods)
+    defined?(Globalize) && model_class.included_modules.include?(Globalize::ActiveRecord::InstanceMethods)
   end
 
   def globalize
@@ -65,7 +65,7 @@ class Essay::ModelFeatures
     #
     # Article.features.globalize.association_for_translations => traits for association named 'translations'
     def association_for_translations
-      globalize_base = ::Globalize::ActiveRecord::Translation
+      globalize_base = Globalize::ActiveRecord::Translation
       model_associations.find do |assoc|
         to_class = assoc.to_class
         to_class && to_class.ancestors.include?(globalize_base)
