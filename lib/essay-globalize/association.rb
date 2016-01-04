@@ -1,5 +1,9 @@
 class Essay::AssociationRoles
 
+  def translation?
+    translation_for_globalize?
+  end
+
   # class Article < ActiveRecord::Base
   #   belongs_to :poster
   #   translates :poster_id
@@ -8,8 +12,7 @@ class Essay::AssociationRoles
   # Article.association_roles[:poster].translation_for_globalize?       => false
   # Article.association_roles[:translations].translation_for_globalize? => true
   def translation_for_globalize?
-    feature = model_features.globalize
-    feature && feature.association_for_translations == this_association
+    !!model_features.with(:globalize) { |g| g.association_for_translations == this_association }
   end
 
   def globalize_translation
@@ -19,9 +22,14 @@ class Essay::AssociationRoles
   end
 
   class GlobalizeTranslation < Base
+  protected
     def top_feature
       model_features.globalize
     end
+  end
+
+  def translates?
+    translates_with_globalize?
   end
 
   # class Article < ActiveRecord::Base
@@ -32,8 +40,7 @@ class Essay::AssociationRoles
   # Article.association_roles[:poster].translates_with_globalize?       => true
   # Article.association_roles[:translations].translates_with_globalize? => false
   def translates_with_globalize?
-    feature = model_features.globalize
-    feature && feature.translated_association_names.include?(association_name)
+    !!model_features.with(:globalize) { |g| g.translated_association_names.include?(association_name) }
   end
 
   def globalize_translatable
@@ -87,21 +94,21 @@ class Essay::AssociationRoles
       top_feature.association_for_translations.from_key_name
     end
 
-    def to_hash
-      super.merge!(
+    serialize do
+      {
         translation_table_name:     translation_table_name,
         translation_from_key_name:  translation_from_key_name,
         translation_to_key_name:    translation_to_key_name
-      )
+      }
     end
   end
 
-  def to_hash
-    super.merge!(
+  serialize do
+    {
       is_translation_for_globalize: translation_for_globalize?,
       translates_with_globalize:    translates_with_globalize?,
       globalize_translation:        globalize_translation.try(:to_hash),
       globalize_translatable:       globalize_translatable.try(:to_hash)
-    )
+    }
   end
 end

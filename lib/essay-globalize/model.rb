@@ -1,4 +1,8 @@
 class Essay::ModelFeatures
+  def translates?
+    translates_with_globalize?
+  end
+
   def translates_with_globalize?
     defined?(Globalize) && model_class.included_modules.include?(Globalize::ActiveRecord::InstanceMethods)
   end
@@ -9,12 +13,24 @@ class Essay::ModelFeatures
     end
   end
 
-  def to_hash
-    super.merge!(
+  serialize do
+    {
       translates_with_globalize: translates_with_globalize?,
       globalize:                 globalize.try(:to_hash)
-    )
+    }
   end
+
+  # if method_defined?(:translates?)
+  #   alias essay_globalize_translates? translates?
+  #
+  #   def translates?
+  #     essay_globalize_translates? || translates_with_globalize?
+  #   end
+  # else
+  #   def translates?
+  #     translates_with_globalize?
+  #   end
+  # end
 
   class TranslatesWithGlobalize < Base
     def translated_attributes

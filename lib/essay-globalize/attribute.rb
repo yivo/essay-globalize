@@ -1,6 +1,9 @@
 class Essay::AttributeRoles
+  def translates?
+    translates_with_globalize?
+  end
+
   def translates_with_globalize?
-    feature = model_features.globalize
-    feature && feature.translated_attribute_names.include?(attribute_name)
+    !!model_features.with(:globalize) { |g| g.translated_attribute_names.include?(attribute_name) }
   end
 end
