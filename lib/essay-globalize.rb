@@ -1,4 +1,3 @@
-require 'globalize'
 require 'essay'
 require 'essay-globalize/model'
 require 'essay-globalize/attribute'
