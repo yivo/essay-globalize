@@ -22,10 +22,11 @@ class Essay::AssociationFeatures
   end
 
   class GlobalizeTranslation < Base
-  protected
     def top_feature
       model_features.globalize
     end
+
+    protected :top_feature
   end
 
   def translates?

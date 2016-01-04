@@ -20,18 +20,6 @@ class Essay::ModelFeatures
     }
   end
 
-  # if method_defined?(:translates?)
-  #   alias essay_globalize_translates? translates?
-  #
-  #   def translates?
-  #     essay_globalize_translates? || translates_with_globalize?
-  #   end
-  # else
-  #   def translates?
-  #     translates_with_globalize?
-  #   end
-  # end
-
   class TranslatesWithGlobalize < Base
     def translated_attributes
       model_class.translated_attribute_names.map { |el| model_associations[el] }
