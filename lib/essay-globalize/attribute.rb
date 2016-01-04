@@ -1,4 +1,4 @@
-class Essay::AttributeRoles
+class Essay::AttributeFeatures
   def translates?
     translates_with_globalize?
   end

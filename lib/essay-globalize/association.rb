@@ -1,4 +1,4 @@
-class Essay::AssociationRoles
+class Essay::AssociationFeatures
 
   def translation?
     translation_for_globalize?
@@ -9,8 +9,8 @@ class Essay::AssociationRoles
   #   translates :poster_id
   # end
   #
-  # Article.association_roles[:poster].translation_for_globalize?       => false
-  # Article.association_roles[:translations].translation_for_globalize? => true
+  # Article.association_features[:poster].translation_for_globalize?       => false
+  # Article.association_features[:translations].translation_for_globalize? => true
   def translation_for_globalize?
     !!model_features.with(:globalize) { |g| g.association_for_translations == this_association }
   end
@@ -37,8 +37,8 @@ class Essay::AssociationRoles
   #   translates :poster_id
   # end
   #
-  # Article.association_roles[:poster].translates_with_globalize?       => true
-  # Article.association_roles[:translations].translates_with_globalize? => false
+  # Article.association_features[:poster].translates_with_globalize?       => true
+  # Article.association_features[:translations].translates_with_globalize? => false
   def translates_with_globalize?
     !!model_features.with(:globalize) { |g| g.translated_association_names.include?(association_name) }
   end
@@ -59,7 +59,7 @@ class Essay::AssociationRoles
     #   translates :poster_id
     # end
     #
-    # Article.association_roles[:poster].translation_table => arel table for 'article_translations'
+    # Article.association_features[:poster].translation_table => arel table for 'article_translations'
     def translation_table
       top_feature.association_for_translations.to.arel
     end
@@ -69,7 +69,7 @@ class Essay::AssociationRoles
     #   translates :poster_id
     # end
     #
-    # Article.association_roles[:poster].translation_table_name => 'article_translations'
+    # Article.association_features[:poster].translation_table_name => 'article_translations'
     def translation_table_name
       translation_table.name.to_sym
     end
@@ -79,7 +79,7 @@ class Essay::AssociationRoles
     #   translates :poster_id
     # end
     #
-    # Article.association_roles[:poster].translation_from_key_name => :poster_id
+    # Article.association_features[:poster].translation_from_key_name => :poster_id
     def translation_from_key_name
       this_association.reflection.foreign_key.to_sym
     end
@@ -89,7 +89,7 @@ class Essay::AssociationRoles
     #   translates :poster_id
     # end
     #
-    # Article.association_roles[:poster].translation_to_key_name => :id
+    # Article.association_features[:poster].translation_to_key_name => :id
     def translation_to_key_name
       top_feature.association_for_translations.from_key_name
     end
