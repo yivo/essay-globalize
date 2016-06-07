@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Essay::AttributeFeatures
   def translates?
     translates_with_globalize?
