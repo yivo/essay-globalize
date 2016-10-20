@@ -1,11 +1,13 @@
+# encoding: utf-8
 # frozen_string_literal: true
+
 class Essay::ModelFeatures
   def translates?
     translates_with_globalize?
   end
 
   def translates_with_globalize?
-    defined?(Globalize) && model_class.included_modules.include?(Globalize::ActiveRecord::InstanceMethods)
+    model_class.included_modules.include?(Globalize::ActiveRecord::InstanceMethods)
   end
 
   def globalize

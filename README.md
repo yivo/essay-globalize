@@ -10,13 +10,13 @@
   Article.features.globalize.model_class_for_translations       # => Article::Translation
   Article.features.globalize.association_for_translations.name  # => :translations
 
-  Article.attribute_roles[:name].translates_with_globalize?           # => true
-  Article.association_roles[:poster].translates_with_globalize?       # => true
-  Article.association_roles[:translations].translates_with_globalize? # => false
-  Article.association_roles[:translations].translation_for_globalize? # => true
+  Article.attribute_features[:name].translates_with_globalize?           # => true
+  Article.association_features[:poster].translates_with_globalize?       # => true
+  Article.association_features[:translations].translates_with_globalize? # => false
+  Article.association_features[:translations].translation_for_globalize? # => true
 ```
 
 ## Gemfile
 ```ruby
-gem 'essay-globalize', github: 'yivo/essay-globalize'
+gem 'essay-globalize', '~> 1.0'
 ```
